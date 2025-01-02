@@ -1,0 +1,188 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', serif;
+    background-color: #f2f2f2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    flex-direction: column;
+    color: white;
+    background-image: linear-gradient(to right, #390099, #669bbc);
+}
+
+.container {
+    background-color: #669bbc;
+    border-radius: 14px;
+    padding: 20px;
+    width: 370px;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 90%;
+    gap: 40px;
+}
+
+.login-form h1 {
+    font-size: 30px;
+}
+
+.login-form label {
+    font-size: 16px;
+}
+
+.login-form   input {
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    background-color: #a9d6e5;
+    width: 100%;
+    margin-bottom: 10px;
+}   
+
+.login-form button {
+    padding: 10px 20px;
+    border-radius: 5px;
+    background-color: #390099;
+    color: white;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 20px;
+    width: 100%;
+    font-size: 20px;
+}
+
+form button {
+    width: 100%;
+    padding: 10px 20px;
+    border-radius: 5px;
+    background-color: #390099;
+    color: white;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 20px;
+    width: 100%;
+    font-size: 20px;
+}
+p a {
+    color: #390099;
+    text-decoration: none;
+}
+
+p a:hover {
+    color: wheat;
+    text-decoration: underline;
+}
+
+.role-selection {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 5px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #a9d6e5;
+}
+
+.role-selection input {
+    margin: 0;
+}
+
+.register-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 90%;
+    gap: 30px;
+}
+
+.register-form h1 {
+    font-size: 30px;
+}
+
+.register-form label {
+    font-size: 16px;
+}
+
+.register-form  input {
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    background-color: #a9d6e5;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.register-form #role-selection {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 5px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #a9d6e5;
+    width: 100%;
+}
+
+#topics {
+  flex: 1;
+}
+
+#topicDetail {
+  flex: 2;
+  background-color: white;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* #topicsList {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.topic-item {
+  background-color: white;
+  padding: 20px;
+  border: 1px solid #b70a0a;
+  border-radius: 5px;
+  cursor: pointer;
+  align-items: center;
+  display: flex;
+  gap: 10px;
+}
+
+.topic-item:hover {
+  background-color: cornflowerblue;
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+} */
+
+
+

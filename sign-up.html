@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Forohub</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="register-form">
+            <h1>Create your account</h1>
+            <form action="" method="POST" id="register-form">
+                <label for="name">Name</label>
+                <input type="text" id="name" required placeholder="Your Name" autofocus>
+                <label for="email">Email</label>
+                <input type="text" id="email" required placeholder="example@example.com">
+                <label for="password">Password</label>
+                <input type="password" id="password" required placeholder="your-password">
+                <label for="role">Select a role</label>
+                <select name="role" id="role-selection">
+                    <option value="student">STUDENT</option>
+                    <option value="teacher">TEACHER</option>
+                    <option value="admin">ADMIN</option>
+                    <option value="instructor">INSTRUCTOR</option>
+                </select>
+                <button type="submit"">Register</button>
+            </form>
+
+            <p>Already have an account? <a href="./sign-in.html">Login</a></p>
+        </div>
+    </div>
+
+    <script src="./js/app.js"></script>
+    <script src="./js/register.js"></script>
+</body>
+
+</html>
