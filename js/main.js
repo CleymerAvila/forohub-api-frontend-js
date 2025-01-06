@@ -1,3 +1,5 @@
+
+
 // Autor: CLEYMER
 // Fecha: 2023-03-01
 document.addEventListener('DOMContentLoaded', async function () {
@@ -69,12 +71,12 @@ document.addEventListener('DOMContentLoaded', async function () {
             topicContent.style.display = "block"; // Mostrar detalle
 
             topicDetail.innerHTML = `
-                <h2>${topic.title}</h2>
-                <p>Message: ${topic.message}</p>
-                <p>Status: <span>${topic.status}</span></p>
-                <p>Author name: ${topic.author}</p>
-                <p>Course name: ${topic.course}</p>
-                <p>Publicado ${new Date(topic.createdAt).toLocaleString()}</p>
+                <h2>${data.title}</h2>
+                <p>Message: ${data.message}</p>
+                <p>Status: <span>${data.status}</span></p>
+                <p>Author name: ${data.author}</p>
+                <p>Course name: ${data.course}</p>
+                <p>Publicado ${new Date(data.createdAt).toLocaleString()}</p>
             `;
         }    
     }
@@ -84,5 +86,42 @@ document.addEventListener('DOMContentLoaded', async function () {
       topicDetail.innerHTML = '';
       topicContent.style.display = "none"; // Ocultar detalle
 
+    });
+
+    document.getElementById('btn-confirm').addEventListener('click', async function () {
+
+        // const payload = jwt.verify(jwt, process.env.JWT_SECRET);
+
+        // const userId = payload.sub;
+
+        // userId = decode.userId;
+        const title = document.getElementById('title').value;
+        const description = document.getElementById('description').value;
+        const course = document.getElementById('course').value;
+
+        try {
+            const data = await fetchData('http://localhost:8080/topics', 'POST', { title, message: description, status: 'ACTIVE', authorId: 1, courseId: course }, true);
+            if (data != null) {
+                console.log(data);
+                alert('Topico creado con éxito');
+                topicList.parentElement.style.display = "none"; // Ocultar lista
+                topicContent.style.display = "block"; // Mostrar detalle
+                topicDetail.innerHTML = `
+                    <h2>${data.title}</h2>
+                    <p>Message: ${data.message}</p>
+                    <p>Status: <span>${data.status}</span></p>
+                    <p>Author name: ${data.author}</p>
+                    <p>Course name: ${data.course}</p>
+                    <p>Publicado ${new Date(data.createdAt).toLocaleString()}</p>
+                `;
+            } else {
+                alert('Error al crear el tópico: ' , data);
+                document.getElementById('info').innerHTML = 'Error al crear el tópico';
+            }
+            alert(data)
+        } catch (error) {
+            alert('Error al intentar crear el tópico');
+            console.error(error);
+        }
     });
 });

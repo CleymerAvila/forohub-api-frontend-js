@@ -166,7 +166,93 @@
             gap: 20px;
         }
 
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+        }
 
+        #modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            width: 40%;
+            height: fit-content;
+            margin: 80px auto;
+            align-content: center;
+            justify-items: center;
+            display: flex;
+            flex-direction: column;
+            align-content: space-between;
+        }
+
+        #modal-content h2 {
+            text-align: center;
+            color: darkblue;
+        }
+
+        #topic-form {
+            margin-top: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            height: 100%;
+            width: 90%;
+            padding: 40px;
+        }
+
+        #topic-form textarea {
+            width: 100%;
+            padding: 10px;
+            height: 100px;
+            border-radius: 5px;
+            resize: none;
+            border: 1px solid #ccc;
+        }
+
+        #topic-form div {
+            display: flex;
+            flex-direction: row;
+            gap: 30px;
+        }
+
+        #topic-form input[type="number"] {
+            width: 50px;
+            height:30px;
+        }
+
+        #topic-form input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        #topic-form button[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: cornflowerblue;
+            border: none;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        #modal-content span.close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -185,7 +271,7 @@
                     <option value="css">CSS</option>
                 </select>
                 <!-- <textarea name="search" id="search" placeholder="Buscar" resize="none"></textarea> -->
-                <button id="btn-create-topic">Crear un topico</button>
+                <button id="btn-create-topic" onclick="openModal()">Crear un topico</button>
             </div>
             <div class="topicList">
                 <div class="topic">
@@ -202,6 +288,24 @@
                 </div>
             </div>
         </section>
+        <div id="myModal" class="modal">
+            <div id="modal-content">
+                <span onclick="closeModal()" class="close">&times;</span>
+                <h2>Crear un nuevo topico</h2>
+                <form action="" id="topic-form">
+                    <label for="title">Titulo</label>
+                    <input type="text" name="title" id="title" required>
+                    <label for="description">Descripción</label>
+                    <textarea name="description" id="description" cols="30" rows="10" required></textarea>
+                    <div>
+                        <label for="course">Curso Id</label>
+                        <input type="number" name="course" id="course" required>
+                    </div>
+                    <p id="info"></p>
+                    <button type="submit" id="btn-confirm">Crear</button>
+                </form>
+            </div>
+        </div>
 
         <section id="topicDetail"style="display: none;">
             <h2>Detalles del topico</h2>

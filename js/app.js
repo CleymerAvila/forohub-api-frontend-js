@@ -44,10 +44,20 @@ async function fetchData(url, method = 'GET', body = null, requiresAuth = false)
     }
 
     const response = await fetch(url, options);
-    if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-    }
+    // if (!response.ok) {
+    //     throw new Error(`HTTP error! status: ${response.status}`);
+    // }
     const data = await response.json();
 
     return data;
+}
+
+function openModal(){
+    document.getElementById('myModal').style.display = "block";
+    document.getElementById('modal-content').style.display = "block";
+}
+
+function closeModal(){
+    document.getElementById('myModal').style.display = "none";
+    document.getElementById('modal-content').style.display = "none";
 }
