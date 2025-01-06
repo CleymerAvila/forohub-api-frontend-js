@@ -17,16 +17,18 @@ document.getElementById('register-form').addEventListener('submit', async (e) =>
 
 
     try {
-        const response = await fetch("http://localhost:8080/users", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            }, 
-            body: JSON.stringify({ name: name, password: password, email: email, profileType: role }),
-        });
+        // const response = await fetch("http://localhost:8080/users", {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     }, 
+        //     body: JSON.stringify({ name: name, password: password, email: email, profileType: role }),
+        // });
 
-        if (response.ok) {
-            const data = await response.json();
+        
+
+        const data = await fetchData("http://localhost:8080/users", 'POST', { name: name, password: password, email: email, profileType: role }, false);
+        if (data != null) {
             console.log(data);
             alert('Usuario creado con éxito');
             window.location.href = '/sign-in.html';

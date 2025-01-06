@@ -1,5 +1,5 @@
-
-
+// Autor: CLEYMER
+// Fecha: 2023-03-01
 document.addEventListener('DOMContentLoaded', async function () {
     const token = getToken();
     const topicList = document.querySelector('.topicList');
@@ -12,19 +12,9 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
 
     try {
-        // console.log('token en main.js', token);
-        const response = await fetch('http://localhost:8080/topics', {
-            method : 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`,
-            },
-        });
+        const data = await fetchData('http://localhost:8080/topics', 'GET', null, true);
 
-        console.log('response', response);
-
-        if (response.ok) {
-            const data = await response.json();
+        if (data != null) {
             console.log('Respuesta de la solicitud OK '+ data);	
 
             // Limpiar los topics existentes (si es necesario)
@@ -69,27 +59,14 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     // Mostrar detalle de un tópico
     async function showTopicDetail(topicId) {
-        // Encontrar el tópico seleccionado
 
-        const response = await fetch(`http://localhost:8080/topics/${topicId}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`,
-            },
-        });
+        const data = await fetchData(`http://localhost:8080/topics/${topicId}`, 'GET', null, true);
 
-        if (response.ok) {
-            const data = await response.json();
-            console.log('Respuesta de la solicitud OK')
+        if (data != null) {
 
             // Limpiar los topics existentes (si es necesario)
             topicList.parentElement.style.display = "none"; // Ocultar lista
             topicContent.style.display = "block"; // Mostrar detalle
-
-            const topic = data;
-
-            console.log(data);
 
             topicDetail.innerHTML = `
                 <h2>${topic.title}</h2>
@@ -99,24 +76,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                 <p>Course name: ${topic.course}</p>
                 <p>Publicado ${new Date(topic.createdAt).toLocaleString()}</p>
             `;
-
-
-            // Crear el HTML para los topics
         }    
-    
-        // // Si el tópico existe, mostrar detalles
-        // console.log(topic);
-        // if (topic !== undefined) {
-        // topicContent.innerHTML = `
-        //     <h3>${topic.name}</h3>
-        //     <p>${topic.status}</p>
-        // `;
-    
-        // // Cambiar de vista
-        // topicList.parentElement.style.display = "none"; // Ocultar lista
-        // topicDetail.style.display = "block"; // Mostrar detalle
-        // alert('Datos obtenidos correctamente');
-        // }
     }
 
     document.getElementById('backToTopics').addEventListener('click', function () {

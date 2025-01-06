@@ -14,21 +14,12 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
 
 
     try {
-        const response = await fetch("http://localhost:8080/login", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ email, password }),
-        });
-
-        console.log("password is", password);
-        console.log(response);
-        if (response.ok) {
-            const data = await response.json();
-            console.log(data.token);
+        const data = await fetchData("http://localhost:8080/login", 'POST', { email, password }, false);
+        if (data != null) { 
+            console.log(data);
             const token = data.token;
             saveToken(token);
+            console.log('token guardado: '+ getToken());
             alert('Usuario iniciado con éxito');
             window.location.href = '/forum.html';
         } else {

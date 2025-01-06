@@ -19,60 +19,35 @@ function isAuthenticated(){
     return !!getToken();
 }
 
-
 // Función global para hacer solicitudes a los endpoints de backend
 async function fetchData(url, method = 'GET', body = null, requiresAuth = false) {
-    // const headers = {
-    //     'Content-Type': 'application/json'
-    // };
-
-
+    const headers = {
+        'Content-Type': 'application/json'
+    };
 
     if (requiresAuth) {
         const token = getToken();
-        console.log('token en mainpage: '+ getToken());
-        if (token) {
+        if (token!=null) {
             headers['Authorization'] = `Bearer ${token}`;
         } else {
-            console.error('No token found');
+            throw new Error('No token found');
         }
     }
 
-    // const options = {
-    //     method,
-    //     headers
-    // };
+    const options = {
+        method,
+        headers
+    };
 
     if (body) {
-        const body = JSON.stringify(body);
+        options.body = JSON.stringify(body);
     }
 
-
-    if (requiresAuth && body!=null) {
-        const token = getToken();
-        const response = await fetch(url, {
-            method: method,
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`,
-            body: JSON.stringify(body)
-        }); 
-
-        return response;
-    } else if(requiresAuth && body==null) {
-        const token = getToken();
-        const response = await fetch(url , {
-            method: method,
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`,
-        });
-
-        return response;
-    } else {
-        const response = await fetch(url , {
-            method: method,
-            'Content-Type': 'application/json',
-        });
-
-        return response;
+    const response = await fetch(url, options);
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
     }
+    const data = await response.json();
+
+    return data;
 }
