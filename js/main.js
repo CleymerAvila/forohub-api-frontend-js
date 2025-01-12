@@ -1,5 +1,4 @@
-
-
+import jwt_decode from 'https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.esm.js';
 // Autor: CLEYMER
 // Fecha: 2023-03-01
 document.addEventListener('DOMContentLoaded', async function () {
@@ -91,6 +90,8 @@ document.addEventListener('DOMContentLoaded', async function () {
     document.getElementById('btn-confirm').addEventListener('click', async function () {
 
         // const payload = jwt.verify(jwt, process.env.JWT_SECRET);
+        const decodedToken = jwt_decode(token);
+        const userId = decodedToken.id;
 
         // const userId = payload.sub;
 
@@ -100,8 +101,10 @@ document.addEventListener('DOMContentLoaded', async function () {
         const course = document.getElementById('course').value;
 
         try {
-            const data = await fetchData('http://localhost:8080/topics', 'POST', { title, message: description, status: 'ACTIVE', authorId: 1, courseId: course }, true);
-            if (data != null) {
+            const data = await fetchData('http://localhost:8080/topics', 'POST', { title, message: description, status: 'ACTIVE', authorId: userId, courseId: course }, true);
+            console.log('Datos recibidos:', data);
+            debugger; // Detener la ejecución aquí para inspeccionar el estado
+            if (data.topicId != null) { 
                 console.log(data);
                 alert('Topico creado con éxito');
                 topicList.parentElement.style.display = "none"; // Ocultar lista
@@ -123,5 +126,6 @@ document.addEventListener('DOMContentLoaded', async function () {
             alert('Error al intentar crear el tópico');
             console.error(error);
         }
+        alert(data)
     });
 });
