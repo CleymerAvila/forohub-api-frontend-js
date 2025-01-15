@@ -1,22 +1,22 @@
 import jwt_decode from 'https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.esm.js';
+const token = getToken();
+const topicList = document.querySelector('.topicList');
+const topicContent = document.getElementById('topicDetail');
+const topicDetail = document.querySelector('.topicDetails');
 // Autor: CLEYMER
 // Fecha: 2023-03-01
 document.addEventListener('DOMContentLoaded', async function () {
-    const token = getToken();
-    const topicList = document.querySelector('.topicList');
-    const topicContent = document.getElementById('topicDetail');
-    const topicDetail = document.querySelector('.topicDetails');
     let topicAsArray = {};
     if (!token) {
-      window.location.href = 'sign-in.html';
-      return;
+        window.location.href = 'sign-in.html';
+        return;
     }
 
     try {
         const data = await fetchData('http://localhost:8080/topics', 'GET', null, true);
 
         if (data != null) {
-            console.log('Respuesta de la solicitud OK '+ data);	
+            console.log('Respuesta de la solicitud OK ' + data);
 
             // Limpiar los topics existentes (si es necesario)
             topicList.innerHTML = '';
@@ -53,9 +53,9 @@ document.addEventListener('DOMContentLoaded', async function () {
         }
     } catch (error) {
         console.error('Error:', error);
-    }  
+    }
     document.getElementById('logout').addEventListener('click', function () {
-      logout();
+        logout();
     });
 
     // Mostrar detalle de un tópico
@@ -77,55 +77,53 @@ document.addEventListener('DOMContentLoaded', async function () {
                 <p>Course name: ${data.course}</p>
                 <p>Publicado ${new Date(data.createdAt).toLocaleString()}</p>
             `;
-        }    
+        }
     }
 
     document.getElementById('backToTopics').addEventListener('click', function () {
-      topicList.parentElement.style.display = "flex"; // Mostrar lista
-      topicDetail.innerHTML = '';
-      topicContent.style.display = "none"; // Ocultar detalle
+        topicList.parentElement.style.display = "flex"; // Mostrar lista
+        topicDetail.innerHTML = '';
+        topicContent.style.display = "none"; // Ocultar detalle
 
     });
+});
 
-    document.getElementById('btn-confirm').addEventListener('click', async function () {
+document.getElementById('btn-confirm').addEventListener('click', async function () {
 
-        // const payload = jwt.verify(jwt, process.env.JWT_SECRET);
-        const decodedToken = jwt_decode(token);
-        const userId = decodedToken.id;
+    const decodedToken = jwt_decode(token);
+    const userId = decodedToken.id;
 
-        // const userId = payload.sub;
+    const title = document.getElementById('title').value;
+    const description = document.getElementById('description').value;
+    const course = document.getElementById('course').value;
 
-        // userId = decode.userId;
-        const title = document.getElementById('title').value;
-        const description = document.getElementById('description').value;
-        const course = document.getElementById('course').value;
+    const newTopic = {
+        title: title,
+        message: description,
+        authorId: userId,
+        courseId: course
+    };
 
-        try {
-            const data = await fetchData('http://localhost:8080/topics', 'POST', { title, message: description, status: 'ACTIVE', authorId: userId, courseId: course }, true);
-            console.log('Datos recibidos:', data);
-            debugger; // Detener la ejecución aquí para inspeccionar el estado
-            if (data.topicId != null) { 
-                console.log(data);
-                alert('Topico creado con éxito');
-                topicList.parentElement.style.display = "none"; // Ocultar lista
-                topicContent.style.display = "block"; // Mostrar detalle
-                topicDetail.innerHTML = `
-                    <h2>${data.title}</h2>
-                    <p>Message: ${data.message}</p>
-                    <p>Status: <span>${data.status}</span></p>
-                    <p>Author name: ${data.author}</p>
-                    <p>Course name: ${data.course}</p>
-                    <p>Publicado ${new Date(data.createdAt).toLocaleString()}</p>
-                `;
-            } else {
-                alert('Error al crear el tópico: ' , data);
-                document.getElementById('info').innerHTML = 'Error al crear el tópico';
-            }
-            alert(data)
-        } catch (error) {
-            alert('Error al intentar crear el tópico');
-            console.error(error);
+    try {
+        const data = await fetchData('http://localhost:8080/topics', 'POST', newTopic, true);
+        if (data.topicId != null) {
+            topicList.parentElement.style.display = "none"; // Ocultar lista
+            topicContent.style.display = "block"; // Mostrar detalle
+            topicDetail.innerHTML = `
+                <h2>${data.title}</h2>
+                <p>Message: ${data.message}</p>
+                <p>Status: <span>${data.status}</span></p>
+                <p>Author name: ${data.author}</p>
+                <p>Course name: ${data.course}</p>
+                <p>Publicado ${new Date(data.createdAt).toLocaleString()}</p>
+            `;
+        } else {
+            alert('Error al crear el tópico: ', data);
+            document.getElementById('info').innerHTML = 'Error al crear el tópico';
         }
-        alert(data)
-    });
+    } catch (error) {
+        alert('Error al intentar crear el tópico');
+        console.error(error);
+        document.getElementById('info').innerHTML = `Error al intentar crear el tópico`;
+    }
 });
