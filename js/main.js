@@ -113,17 +113,30 @@ document.getElementById('btn-confirm').addEventListener('click', async function 
                 <h2>${data.title}</h2>
                 <p>Message: ${data.message}</p>
                 <p>Status: <span>${data.status}</span></p>
-                <p>Author name: ${data.author}</p>
                 <p>Course name: ${data.course}</p>
                 <p>Publicado ${new Date(data.createdAt).toLocaleString()}</p>
             `;
+            clearForm();
+            document.getElementById('info').style.color = 'green';
+            document.getElementById('info').innerHTML = 'Tópico creado correctamente';
         } else {
             alert('Error al crear el tópico: ', data);
+            document.getElementById('info').style.color = 'red';
             document.getElementById('info').innerHTML = 'Error al crear el tópico';
         }
     } catch (error) {
         alert('Error al intentar crear el tópico');
         console.error(error);
-        document.getElementById('info').innerHTML = `Error al intentar crear el tópico`;
+        clearForm();
+        const infoParagraph = document.getElementById('info');
+        infoParagraph.style.display = 'block';
+        infoParagraph.innerHTML = `&#8505; Error al intentar crear el tópico`; 
+        infoParagraph.style.color = 'red';
+    }
+
+    function clearForm() {
+        document.getElementById('title').value = '';
+        document.getElementById('description').value = '';
+        document.getElementById('course').value = '';
     }
 });
