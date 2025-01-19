@@ -183,8 +183,8 @@
             padding: 20px;
             border-radius: 5px;
             width: 40%;
-            height: fit-content;
-            margin: 80px auto;
+            height: 90%;
+            margin: 30px auto;
             align-content: center;
             justify-items: center;
             display: flex;
@@ -198,13 +198,13 @@
         }
 
         #topic-form {
-            margin-top: 40px;
+            margin-top: 0px;
             display: flex;
             flex-direction: column;
             gap: 20px;
             height: 100%;
             width: 90%;
-            padding: 40px;
+            padding: 30px;
         }
 
         #topic-form textarea {
@@ -234,22 +234,33 @@
             border: 1px solid #ccc;
         }
 
-        #topic-form button[type="submit"] {
+        #topic-form button[type="button"] {
             width: 100%;
             padding: 10px;
             border-radius: 5px;
-            background-color: cornflowerblue;
+            background-color: rgb(41, 86, 168);
             border: none;
             color: white;
             cursor: pointer;
-            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        
+        #topic-form button[type="button"]:hover {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            color: white;
+            background-color: cornflowerblue;
+            transition: all 0.5s ease;
             margin-top: 20px;
         }
 
         #topic-form p{
             color: red;
             display: none;
-            margin-top: 10px;
+            margin-top: 0px;
             text-align: left;
             font-weight: bold;
             font-family: 'JetBrains Mono', monospace;
