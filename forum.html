@@ -104,15 +104,13 @@
 
         .topic-options button:hover{
             background-color: rgb(82, 252, 82);
-            color: white;
             cursor: pointer;
             border: 1px solid cornflowerblue;
-            transition: all 0.5s ease;
+            transition: bakcground-color 0.3s ease, transform 0.3s ease;
             box-shadow: inset 0 0 0 2px rgb(82, 252, 82);
         }
         .topic{
             background-color: white;
-            border-radius: 10px;
             padding: 20px;
             display: flex;
             flex-direction: column;
@@ -121,14 +119,14 @@
         }
 
         .topic:hover{
-            border-radius: 10px;
             padding: 20px;
             display: flex;
             flex-direction: column;
             gap: 10px;
             align-items: center;
             align-items: flex-start;
-            box-shadow:  0 0 0 2px rgb(0.5, 0.5, 0.5);
+            box-shadow:  0 0 0 2px rgb(41, 86, 168, 0.2);
+            background-color: rgba(194, 209, 236, 0.2);
         }
 
         .topic h3 {
@@ -274,6 +272,18 @@
             font-weight: bold;
             cursor: pointer;
         }
+
+        footer{
+            background-color: rgb(41, 86, 168);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
     </style>
 </head>
 <body>
@@ -337,6 +347,15 @@
         </section>
     </main>
 
+    <footer>
+        <a href="#topics">Foro Hub Cursos Online</a>
+        <br>
+        <a href="https://github.com/CleymerAvila/forohub-api-frontend-js" target="_blank">Forohub API Front End</a>
+        <br>
+        <a href="https://github.com/CleymerAvila/Foro-Hub-API" targent="_blank">Forohub API Back End</a>
+        <br>
+        <p>© Copyright 2023 CLEYMER </p>
+    </footer>
     <script src="./js/app.js"></script>
     <script type="module" src="./js/main.js"></script>
 </body>
