@@ -52,9 +52,11 @@ async function fetchData(url, method = 'GET', body = null, requiresAuth = false)
     return data;
 }
 
-function openModal(){
+async function openModal(dataCourse){
     document.getElementById('myModal').style.display = "block";
     document.getElementById('modal-content').style.display = "block";
+    localStorage.setItem('courses', JSON.stringify(dataCourse));
+    document.getElementById('courseList').innerHTML = dataCourse.content.map(course => `<option value="${course.courseId}">${course.name}</option>`).join('');
 }
 
 function closeModal(){
