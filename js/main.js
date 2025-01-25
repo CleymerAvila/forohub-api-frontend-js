@@ -3,54 +3,32 @@ const token = getToken();
 const topicList = document.querySelector('.topicList');
 const topicContent = document.getElementById('topicDetail');
 const topicDetail = document.querySelector('.topicDetails');
+
+let courses = [];
 // Autor: CLEYMER
 // Fecha: 2023-03-01
 document.addEventListener('DOMContentLoaded', async function () {
-    let topicAsArray = {};
     if (!token) {
         window.location.href = 'sign-in.html';
         return;
     }
 
     try {
-        const data = await fetchData('http://localhost:8080/topics', 'GET', null, true);
-
-        if (data != null) {
-            console.log('Respuesta de la solicitud OK ' + data);
-
-            // Limpiar los topics existentes (si es necesario)
-            topicList.innerHTML = '';
-
-            console.log(data);
-
-            // Crear el HTML para los topics
-            const topicsHTML = data.content.map(topic => `
-                <div class="topic" data-id="${topic.topicId}">
-                    <h3>${topic.title}</h3>
-                    <p>Status: <span>${topic.status}</span></p>
-                    <p>Author name: ${topic.authorName}</p>
-                    <p>Course name: ${topic.courseName}</p>
-                    <p>Publicado ${new Date(topic.createdAt).toLocaleString()}</p>
-                </div>
-            `).join('');
-
-            topicAsArray = data.content;
-
-            // Asignar el HTML al contenedor principal
-            topicList.innerHTML = topicsHTML;
-
-            document.querySelectorAll('.topic').forEach(item => {
-                console.log('entro en el evento dfjasd')
-                item.addEventListener('click', () => {
-                    const topicId = item.getAttribute('data-id');
-                    showTopicDetail(topicId);
-                });
-            });
-
-            // alert('Datos obtenidos correctamente');
+        
+        const selectedCategory = document.getElementById('category').value;
+        if (selectedCategory === 'all') {
+            const data = await fetchData('http://localhost:8080/topics', 'GET', null, true);
+            if(data != null){ 
+                showTopicList(data);
+                console.log('Datos obtenidos correctamente');
+            } else {
+                alert('No autorizado');
+            }
         } else {
-            alert('No autorizado');
+            const data = await fetchData(`http://localhost:8080/topics?category=${selectedCategory}`, 'GET', null, true);
+            showTopicList(data);
         }
+        console.log('Categoria seleccionada: ', selectedCategory);
     } catch (error) {
         console.error('Error:', error);
     }
@@ -59,34 +37,62 @@ document.addEventListener('DOMContentLoaded', async function () {
     });
 
     // Mostrar detalle de un tópico
-    async function showTopicDetail(topicId) {
-
-        const data = await fetchData(`http://localhost:8080/topics/${topicId}`, 'GET', null, true);
-
-        if (data != null) {
-
-            // Limpiar los topics existentes (si es necesario)
-            topicList.parentElement.style.display = "none"; // Ocultar lista
-            topicContent.style.display = "block"; // Mostrar detalle
-
-            topicDetail.innerHTML = `
-                <h2>${data.title}</h2>
-                <p>Message: ${data.message}</p>
-                <p>Status: <span>${data.status}</span></p>
-                <p>Author name: ${data.author}</p>
-                <p>Course name: ${data.course}</p>
-                <p>Publicado ${new Date(data.createdAt).toLocaleString()}</p>
-            `;
-        }
-    }
-
+    
     document.getElementById('backToTopics').addEventListener('click', function () {
         topicList.parentElement.style.display = "flex"; // Mostrar lista
         topicDetail.innerHTML = '';
         topicContent.style.display = "none"; // Ocultar detalle
-
+        window.location.href = 'forum.html';
     });
 });
+
+function showTopicList(data){
+    // Limpiar los topics existentes (si es necesario)
+    topicList.innerHTML = '';
+
+    console.log(data);
+
+    // Crear el HTML para los topics
+    const topicsHTML = data.content.map(topic => `
+        <div class="topic" data-id="${topic.topicId}">
+            <h3>${topic.title}</h3>
+            <p>Estado: <span>${topic.status}</span></p>
+            <p>Autor: ${topic.authorName}</p>
+            <p>Curso: ${topic.courseName}</p>
+            <p>Publicado ${new Date(topic.createdAt).toLocaleString()}</p>
+        </div>
+    `).join('');
+
+    topicList.innerHTML = topicsHTML;
+
+    document.querySelectorAll('.topic').forEach(item => {
+        console.log('entro en el evento dfjasd')
+        item.addEventListener('click', () => {
+            const topicId = item.getAttribute('data-id');
+            showTopicDetail(topicId);
+        });
+    });
+}
+async function showTopicDetail(topicId) {
+
+    const data = await fetchData(`http://localhost:8080/topics/${topicId}`, 'GET', null, true);
+
+    if (data != null) {
+
+        // Limpiar los topics existentes (si es necesario)
+        topicList.parentElement.style.display = "none"; // Ocultar lista
+        topicContent.style.display = "block"; // Mostrar detalle
+
+        topicDetail.innerHTML = `
+            <h2>${data.title}</h2>
+            <p>Mensaje: ${data.message}</p>
+            <p>Estado: <span>${data.status}</span></p>
+            <p>Autor: ${data.author}</p>
+            <p>Curso: ${data.course}</p>
+            <p>Publicado ${new Date(data.createdAt).toLocaleString()}</p>
+        `;
+    }
+}
 
 document.getElementById('btn-confirm').addEventListener('click', async function () {
 
@@ -94,14 +100,16 @@ document.getElementById('btn-confirm').addEventListener('click', async function 
     const userId = decodedToken.id;
 
     const title = document.getElementById('title').value;
-    const description = document.getElementById('description').value;
-    const course = document.getElementById('course').value;
+    const message = document.getElementById('message').value;
+    let courseId = document.getElementById('courseList').value;
+
+    console.log('Id del curso: ', courseId);
 
     const newTopic = {
         title: title,
-        message: description,
+        message: message,
         authorId: userId,
-        courseId: course
+        courseId: courseId
     };
 
     try {
@@ -109,18 +117,16 @@ document.getElementById('btn-confirm').addEventListener('click', async function 
         if (data.topicId != null) {
             topicList.parentElement.style.display = "none"; // Ocultar lista
             topicContent.style.display = "block"; // Mostrar detalle
-            topicDetail.innerHTML = `
-                <h2>${data.title}</h2>
-                <p>Message: ${data.message}</p>
-                <p>Status: <span>${data.status}</span></p>
-                <p>Course name: ${data.course}</p>
-                <p>Publicado ${new Date(data.createdAt).toLocaleString()}</p>
-            `;
+            showTopicDetail(data.topicId);
             clearForm();
+            document.getElementById('info').style.display = 'block';
             document.getElementById('info').style.color = 'green';
             document.getElementById('info').innerHTML = 'Tópico creado correctamente';
+            alert('Tópico creado correctamente');
+            closeModal();
         } else {
             alert('Error al crear el tópico: ', data);
+            closeModal();
             document.getElementById('info').style.color = 'red';
             document.getElementById('info').innerHTML = 'Error al crear el tópico';
         }
@@ -136,7 +142,38 @@ document.getElementById('btn-confirm').addEventListener('click', async function 
 
     function clearForm() {
         document.getElementById('title').value = '';
-        document.getElementById('description').value = '';
-        document.getElementById('course').value = '';
+        document.getElementById('message').value = '';
     }
+});
+
+document.getElementById('category').addEventListener('change', function () {
+    const category = document.getElementById('category').value;
+    if (category === 'all') {
+        fetchData('http://localhost:8080/topics', 'GET', null, true);
+    } else {
+        fetchData(`http://localhost:8080/topics?category=${category}`, 'GET', null, true);
+    }
+});
+
+// Seleccionamos elementos del DOM
+const sidebar = document.getElementById('sidebar');
+const toggleBtn = document.getElementById('sidebarCollapse');
+
+// Evento para abrir y cerrar la sidebar
+toggleBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('active');  // Alterna la clase 'active'
+    
+    // Cambia el icono del botón dependiendo del estado
+    if (sidebar.classList.contains('active')) {
+        toggleBtn.innerHTML = '|||';  // Icono de cerrar
+    } else {
+        toggleBtn.innerHTML = '☰';  // Icono de menú
+    }
+});
+
+// Evento para abrir y cerrar la sidebar
+document.getElementById('btn-create-topic').addEventListener('click', async () => {
+    const dataCourse = await fetchData('http://localhost:8080/courses', 'GET', null, true);
+    courses = dataCourse.content;
+    openModal(dataCourse);
 });
