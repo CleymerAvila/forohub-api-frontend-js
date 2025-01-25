@@ -14,21 +14,23 @@
         }
 
         body {
-            background-color: aliceblue;
+            background-color: #a2d2ff;
             font-family: 'Inter', sans-serif;
         }
-        header{
-            background-color: #669bbc;
+
+        header {
+            background-color: #03045E;
             color: white;
             padding: 15px;
             display: flex;
             justify-content: space-between;
         }
-        header h1{
+
+        header h1 {
             font-size: 30px;
         }
 
-        header button{
+        header button {
             background-color: white;
             color: black;
             border: none;
@@ -36,14 +38,68 @@
             border-radius: 5px;
             cursor: pointer;
         }
-        main{
+
+        main {
             display: flex;
             justify-content: center;
-            align-items: center;
-            flex-direction: column;
+            align-items: stretch;
+            flex-direction: row;
             gap: 20px;
         }
-        #topics{
+
+        #sidebar {
+            position: fixed;
+            right: -250px;  /* Oculta la sidebar */
+            top: 0;
+            width: 250px;
+            height: 100%;
+            background: #023E8A;
+            color: white;
+            transition: left 0.3s ease;
+            padding-top: 60px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+            justify-items: center;
+        }
+
+        #sidebarCollapse {
+            position: absolute;
+            top: 10px;
+            right: 30px;
+            width: 45px;
+            height: 45px;
+            background: #0077B6;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            z-index: 10;
+        }
+
+        #sidebar.active {
+            right: 0;
+        }
+
+        #sidebar h4 {
+            color: white;
+            cursor: pointer;
+            font-size: 20px;
+            margin-top: 20px;
+            width: 100%;
+            text-align: center;
+            padding: 20px;
+        }
+
+        #sidebar h4:hover {
+            background-color: #0096C7;
+            transition: all 0.3s ease-in-out;
+        }
+
+
+
+        #topics {
             display: flex;
             flex-direction: row;
             gap: 20px;
@@ -51,82 +107,87 @@
             margin-top: 20px;
         }
 
-        .topicList{
+        .topicList {
             display: flex;
             flex-direction: column;
             gap: 20px;
             width: 60%;
         }
 
-        .topic-options{
+        .topic-options {
             display: flex;
             flex-direction: column;
             gap: 20px;
             width: 35%;
-            margin-top: 10px;
+            margin-top: 20px;
             align-items: center;
             justify-content: left;
             padding: 20px;
-            border-radius: 10px;
             background-color: white;
-            opacity: 70%;
             height: 100vh;
-            color: cornflowerblue;
+            color: #03045E;
             border-radius: 2px solid cornflowerblue;
         }
 
-        .topic-options h2{
+        .topic-options h2 {
             text-align: center;
             margin-bottom: 40px;
         }
 
-        .topic-options select{
+        .topic-options select {
             width: 45%;
             padding: 10px;
             margin-bottom: 20px;
             margin-right: 30px;
-            border-radius:5px;
+            border-radius: 5px;
+            box-shadow: inset 0 0 2px #000;
         }
 
-        .topic-options select:hover{
-            background-color: cornflowerblue;
-            color: white;
-            border: 1px solid rgb(82, 252, 82);
+        .topic-options select:hover {
+            box-shadow: inset 0 0 1px #0077B6;
         }
 
-        .topic-options button{
+        .topic-options select:focus {
+            outline: none;
+        }
+
+        .topic-options button {
             width: 40%;
             padding: 10px;
             border-radius: 10px;
-            background-color: cornflowerblue;
+            background-color: #0077B6;
             border: none;
+            color: white;
+            font-weight: 600;
         }
 
-        .topic-options button:hover{
-            background-color: rgb(82, 252, 82);
+        .topic-options button:hover {
+            background-color: #0096C7;
             cursor: pointer;
-            border: 1px solid cornflowerblue;
             transition: bakcground-color 0.3s ease, transform 0.3s ease;
-            box-shadow: inset 0 0 0 2px rgb(82, 252, 82);
+            box-shadow:  inset  0 0 2px #000;
+            border: none;
+            transform: scale(1.0093);
         }
-        .topic{
+
+        .topic {
             background-color: white;
             padding: 20px;
             display: flex;
             flex-direction: column;
-            gap: 10px;;
+            gap: 10px;
             align-items: flex-start;
         }
 
-        .topic:hover{
+        .topic:hover {
             padding: 20px;
             display: flex;
             flex-direction: column;
             gap: 10px;
             align-items: center;
             align-items: flex-start;
-            box-shadow:  0 0 0 2px rgb(41, 86, 168, 0.2);
-            background-color: rgba(194, 209, 236, 0.2);
+            box-shadow: none 0 0 4px rgba(0, 0, 0, 0.2);
+            background-color: whitesmoke;
         }
 
         .topic h3 {
@@ -134,7 +195,7 @@
         }
 
         .topic p {
-            color: #333 ;
+            color: #333;
             opacity: 0.8;
         }
 
@@ -142,7 +203,7 @@
             color: green;
         }
 
-        #topicDetail{
+        #topicDetail {
             display: block;
             width: 60%;
             gap: 20px;
@@ -153,12 +214,12 @@
             padding: 20px;
         }
 
-        #topicDetail h2{
+        #topicDetail h2 {
             text-align: center;
             color: darkblue;
         }
 
-        #topicDetail .topicDetails{
+        #topicDetail .topicDetails {
             display: flex;
             flex-direction: column;
             gap: 20px;
@@ -216,13 +277,13 @@
 
         #topic-form div {
             display: flex;
-            flex-direction: row;
+            flex-direction: column;
             gap: 30px;
         }
 
-        #topic-form input[type="number"] {
-            width: 50px;
-            height:30px;
+        #topic-form select {
+            width: 100%;
+            height: 30px;
         }
 
         #topic-form input[type="text"] {
@@ -243,7 +304,7 @@
             margin-top: 20px;
         }
 
-        
+
         #topic-form button[type="button"]:hover {
             width: 100%;
             padding: 10px;
@@ -255,7 +316,7 @@
             margin-top: 20px;
         }
 
-        #topic-form p{
+        #topic-form p {
             color: red;
             display: none;
             margin-top: 0px;
@@ -273,7 +334,8 @@
             cursor: pointer;
         }
 
-        footer{
+        footer {
+            margin-top: 70px;
             background-color: rgb(41, 86, 168);
             color: white;
             padding: 20px;
@@ -286,23 +348,33 @@
         }
     </style>
 </head>
+
 <body>
     <header>
         <h1>Forohub Cursos Online</h1>
-        <button id="logout">Logout</button>
+        <button id="sidebarCollapse">☰</button>
     </header>
-
+    
     <main>
         <section id="topics">
             <div class="topic-options" style="display: block;">
                 <h2>Topicos más recientes</h2>
                 <select name="category" id="category">
-                    <option value="javascript">JavaScript</option>
-                    <option value="html">HTML</option>
-                    <option value="css">CSS</option>
+                    <option value="all">Todos</option>
+                    <option value="PROGRAMMING">Programación</option>
+                    <option value="LANGUAGE">Lenguaje</option>
+                    <option value="MATH">Matemáticas</option>
+                    <option value="ENGINEERING">Ingeniería</option>
+                    <option value="DATA_SCIENCE">Ciencia de datos</option>
+                    <option value="BACK_END">Back-End</option>
+                    <option value="FRONT_END">Front-End</option>
+                    <option value="BUSINESS">Negocios</option>
+                    <option value="INNOVATION">Innovación</option>
+                    <option value="DEV_OPS">Dev Ops</option>
+                    <option value="OFF_TOPIC">Off Topic</option>
                 </select>
                 <!-- <textarea name="search" id="search" placeholder="Buscar" resize="none"></textarea> -->
-                <button id="btn-create-topic" onclick="openModal()">Crear un topico</button>
+                <button id="btn-create-topic"">Crear un topico</button>
             </div>
             <div class="topicList">
                 <div class="topic">
@@ -319,6 +391,12 @@
                 </div>
             </div>
         </section>
+        <aside id="sidebar">
+            <h4>Cursos</h4>
+            <h4>Topicos</h4>
+            <h4>Perfil</h4>
+            <button id="logout">Logout</button>
+        </aside>
         <div id="myModal" class="modal">
             <div id="modal-content">
                 <span onclick="closeModal()" class="close">&times;</span>
@@ -326,11 +404,13 @@
                 <form action="" id="topic-form">
                     <label for="title">Titulo</label>
                     <input type="text" name="title" id="title" required>
-                    <label for="description">Descripción</label>
-                    <textarea name="description" id="description" cols="30" rows="10" required></textarea>
+                    <label for="message">Mensaje</label> 
+                    <textarea name="message" id="message" cols="30" rows="10" required></textarea> 
                     <div>
-                        <label for="course">Curso Id</label>
-                        <input type="number" name="course" id="course" required>
+                        <label for="course">Curso</label>
+                        <select name="courses" id="courseList" required>
+                            <option value=""></option>
+                        </select>
                     </div>
                     <p id="info">&#8505;</p>
                     <button type="button" id="btn-confirm">Crear</button>
@@ -338,7 +418,7 @@
             </div>
         </div>
 
-        <section id="topicDetail"style="display: none;">
+        <section id="topicDetail" style="display: none;">
             <h2>Detalles del topico</h2>
             <div class="topicDetails">
 
