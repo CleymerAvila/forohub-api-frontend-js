@@ -3,6 +3,7 @@ const token = getToken();
 const topicList = document.querySelector('.topicList');
 const topicContent = document.getElementById('topicDetail');
 const topicDetail = document.querySelector('.topicDetails');
+const filterButtons = document.querySelectorAll('.toggle-btn');
 
 let courses = [];
 // Autor: CLEYMER
@@ -16,6 +17,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     try {
         
         const selectedCategory = document.getElementById('category').value;
+        // Si la categoría es "all", se obtienen todos los tópicos
         if (selectedCategory === 'all') {
             const data = await fetchData('http://localhost:8080/topics', 'GET', null, true);
             if(data != null){ 
@@ -25,7 +27,8 @@ document.addEventListener('DOMContentLoaded', async function () {
                 alert('No autorizado');
             }
         } else {
-            const data = await fetchData(`http://localhost:8080/topics?category=${selectedCategory}`, 'GET', null, true);
+            // Si la categoría no es "all", se obtienen los tópicos de esa categoría
+            const data = await fetchData(`http://localhost:8080/topics/category/${selectedCategory}`, 'GET', null, true);
             showTopicList(data);
         }
         console.log('Categoria seleccionada: ', selectedCategory);
@@ -146,11 +149,15 @@ document.getElementById('btn-confirm').addEventListener('click', async function 
     }
 });
 
-document.getElementById('category').addEventListener('change', function () {
+document.getElementById('category').addEventListener('change', async function () {
     const category = document.getElementById('category').value;
+    console.log('Categoría seleccionada: ', category);
     if (category === 'all') {
-        fetchData('http://localhost:8080/topics', 'GET', null, true);
+        const data = await fetchData('http://localhost:8080/topics', 'GET', null, true);
+        showTopicList(data);
     } else {
+        const data = await fetchData(`http://localhost:8080/topics/category/${category}`, 'GET', null, true);
+        showTopicList(data);
         fetchData(`http://localhost:8080/topics?category=${category}`, 'GET', null, true);
     }
 });
@@ -176,4 +183,25 @@ document.getElementById('btn-create-topic').addEventListener('click', async () =
     const dataCourse = await fetchData('http://localhost:8080/courses', 'GET', null, true);
     courses = dataCourse.content;
     openModal(dataCourse);
+});
+
+// Filtros de topicos
+
+filterButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        // Si el botón ya está activo, lo desactiva
+        if (button.classList.contains('active')) {
+            button.classList.remove('active');
+            console.log('Filtro deseleccionado');
+        } else {
+            // Desactivar cualquier botón previamente activo
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+
+            // Activar el botón seleccionado
+            button.classList.add('active');
+            console.log('Filtro seleccionado:', button.getAttribute('data-filter'));
+        }
+
+        // Aquí podrías hacer una llamada a la API o filtrar elementos
+    });
 });
