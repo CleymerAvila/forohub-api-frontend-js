@@ -4,6 +4,7 @@ const topicList = document.querySelector('.topicList');
 const topicContent = document.getElementById('topicDetail');
 const topicDetail = document.querySelector('.topicDetails');
 const filterButtons = document.querySelectorAll('.toggle-btn');
+const topicReply = document.querySelector('.topic-replies');    
 
 let courses = [];
 // Autor: CLEYMER
@@ -49,24 +50,37 @@ document.addEventListener('DOMContentLoaded', async function () {
     });
 });
 
-function showTopicList(data){
+function showTopicList(data, status=''){
     // Limpiar los topics existentes (si es necesario)
     topicList.innerHTML = '';
 
     console.log(data);
 
-    // Crear el HTML para los topics
-    const topicsHTML = data.content.map(topic => `
-        <div class="topic" data-id="${topic.topicId}">
-            <h3>${topic.title}</h3>
-            <p>Estado: <span>${topic.status}</span></p>
-            <p>Autor: ${topic.authorName}</p>
-            <p>Curso: ${topic.courseName}</p>
-            <p>Publicado ${new Date(topic.createdAt).toLocaleString()}</p>
-        </div>
-    `).join('');
+    if(status === ''){
+        // Crear el HTML para los topics
+        const topicsHTML = data.content.map(topic => `
+            <div class="topic" data-id="${topic.topicId}">
+                <h3>${topic.title}</h3>
+                <p>Estado: <span>${topic.status}</span></p>
+                <p>Autor: ${topic.authorName}</p>
+                <p>Curso: ${topic.courseName}</p>
+                <p>Publicado ${new Date(topic.createdAt).toLocaleString()}</p>
+            </div>
+        `).join('');
+        topicList.innerHTML = topicsHTML;
+    } else {
+        const topicsHTML = data.content.filter(topic => topic.status === status).map(topic => `
+            <div class="topic" data-id="${topic.topicId}">
+                <h3>${topic.title}</h3>
+                <p>Estado: <span>${topic.status}</span></p>
+                <p>Autor: ${topic.authorName}</p>
+                <p>Curso: ${topic.courseName}</p>
+                <p>Publicado ${new Date(topic.createdAt).toLocaleString()}</p>
+            </div>
+        `).join('');
+        topicList.innerHTML = topicsHTML;
+    }
 
-    topicList.innerHTML = topicsHTML;
 
     document.querySelectorAll('.topic').forEach(item => {
         console.log('entro en el evento dfjasd')
@@ -94,6 +108,19 @@ async function showTopicDetail(topicId) {
             <p>Curso: ${data.course}</p>
             <p>Publicado ${new Date(data.createdAt).toLocaleString()}</p>
         `;
+
+        // Mostrar respuestas
+        const replies = data.replies;
+        console.log('Respuestas: '+ replies);
+        const repliesHTML = replies.map(reply => `
+            <div class="reply">
+                <p>Mensaje: ${reply.message}</p>
+                <p><span>${reply.solution}</span></p>
+                <p>Creado el ${new Date(reply.createdAt).toLocaleString()}</p>
+                <p>Autor: ${reply.authorId}</p>
+            </div>
+        `).join('');
+        topicReply.innerHTML = repliesHTML;
     }
 }
 
@@ -188,11 +215,14 @@ document.getElementById('btn-create-topic').addEventListener('click', async () =
 // Filtros de topicos
 
 filterButtons.forEach(button => {
-    button.addEventListener('click', () => {
+    button.addEventListener('click', async() => {
+        let statusSelected = '';
         // Si el botón ya está activo, lo desactiva
         if (button.classList.contains('active')) {
             button.classList.remove('active');
             console.log('Filtro deseleccionado');
+            const data = await fetchData(`http://localhost:8080/topics`, 'GET', null, true);
+            showTopicList(data);
         } else {
             // Desactivar cualquier botón previamente activo
             filterButtons.forEach(btn => btn.classList.remove('active'));
@@ -200,6 +230,10 @@ filterButtons.forEach(button => {
             // Activar el botón seleccionado
             button.classList.add('active');
             console.log('Filtro seleccionado:', button.getAttribute('data-filter'));
+            statusSelected = button.getAttribute('data-filter');
+
+            const data = await fetchData(`http://localhost:8080/topics`, 'GET', null, true);
+            showTopicList(data, statusSelected);
         }
 
         // Aquí podrías hacer una llamada a la API o filtrar elementos
