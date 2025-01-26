@@ -112,6 +112,7 @@
             flex-direction: column;
             gap: 20px;
             width: 60%;
+            margin-top: 20px;
         }
 
         .topic-options {
@@ -127,6 +128,7 @@
             height: 100vh;
             color: #03045E;
             border-radius: 2px solid cornflowerblue;
+            border-radius: 10px;
         }
 
         .topic-options h2 {
@@ -177,6 +179,8 @@
             flex-direction: column;
             gap: 10px;
             align-items: flex-start;
+            cursor: pointer;
+            border-radius: 10px;
         }
 
         .topic:hover {
@@ -405,9 +409,9 @@
                 <button id="btn-create-topic"">Crear un topico</button>
 
                 <div class="filter-toggle-buttons">
-                    <button class="toggle-btn" data-filter="activo">Activo</button>
-                    <button class="toggle-btn" data-filter="discutidos">Discutidos</button>
-                    <button class="toggle-btn" data-filter="resuelto">Resuelto</button>
+                    <button class="toggle-btn" data-filter="ACTIVE">Activo</button>
+                    <button class="toggle-btn" data-filter="DISCUSSED">Discutidos</button>
+                    <button class="toggle-btn" data-filter="RESOLVED">Resuelto</button>
                 </div>
             </div>
             <div class="topicList">
@@ -456,6 +460,13 @@
             <h2>Detalles del topico</h2>
             <div class="topicDetails">
 
+            </div>
+            <div class="topic-replies" style="display: block;">
+                <h4>Respuestas</h4>
+                <p>mensaje</p>
+                <p><span>solution</span></p>
+                <p>created at: </p>
+                <p>author: </p>
             </div>
             <button id="backToTopics">Volver a los topicos</button>
         </section>
