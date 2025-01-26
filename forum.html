@@ -346,6 +346,34 @@
             flex-direction: column;
             gap: 20px;
         }
+
+        /* Filtros de topicos */
+        .filter-toggle-buttons {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+            width: 90%;
+        }
+
+        div button.toggle-btn {
+            border-radius: 10px;
+            padding: 12px 24px;
+            background-color: rgb(212, 203, 203);
+            color: #4d4d4d;
+            font-weight: bold;
+            cursor: pointer;
+            width: 50%;
+        }
+
+        div button.toggle-btn.active {
+            transform: all 0.3s ease;
+            border-style: outset solid #00cc4b;
+            color: white;
+            background-color: #00cc4b85;
+        }
+
     </style>
 </head>
 
@@ -375,6 +403,12 @@
                 </select>
                 <!-- <textarea name="search" id="search" placeholder="Buscar" resize="none"></textarea> -->
                 <button id="btn-create-topic"">Crear un topico</button>
+
+                <div class="filter-toggle-buttons">
+                    <button class="toggle-btn" data-filter="activo">Activo</button>
+                    <button class="toggle-btn" data-filter="discutidos">Discutidos</button>
+                    <button class="toggle-btn" data-filter="resuelto">Resuelto</button>
+                </div>
             </div>
             <div class="topicList">
                 <div class="topic">
