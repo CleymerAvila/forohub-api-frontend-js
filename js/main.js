@@ -103,7 +103,7 @@ async function showTopicDetail(topicId) {
         topicDetail.innerHTML = `
             <h2>${data.title}</h2>
             <p>Mensaje: ${data.message}</p>
-            <p>Estado: <span>${data.status}</span></p>
+            <p>Estado: <span style=color:green>${data.status}</span></p>
             <p>Autor: ${data.author}</p>
             <p>Curso: ${data.course}</p>
             <p>Publicado ${new Date(data.createdAt).toLocaleString()}</p>
@@ -114,10 +114,20 @@ async function showTopicDetail(topicId) {
         console.log('Respuestas: '+ replies);
         const repliesHTML = replies.map(reply => `
             <div class="reply">
-                <p>Mensaje: ${reply.message}</p>
-                <p><span>${reply.solution}</span></p>
-                <p>Creado el ${new Date(reply.createdAt).toLocaleString()}</p>
-                <p>Autor: ${reply.authorId}</p>
+                <div>
+                    <div class="message">
+                        <p>Mensaje: ${reply.message}</p>
+                    </div>
+                    <div class="solution">
+                        <p><span style='color:blue'>Solución: </span>${reply.solution}</p>
+                    </div>
+                </div>
+                <div>
+                    <div class="response-details">
+                        <p>Creado el ${new Date(reply.createdAt).toLocaleString()}</p>
+                        <p>Autor: ${reply.authorId}</p>
+                    </div>
+                </div>
             </div>
         `).join('');
         topicReply.innerHTML = repliesHTML;
