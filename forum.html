@@ -213,9 +213,10 @@
             gap: 20px;
             background-color: whitesmoke;
             border: solid 1px cornflowerblue;
-            border-radius: 10px;
+            border-radius: 0px;
             margin: 40px;
             padding: 20px;
+            height: 100vh;
         }
 
         #topicDetail h2 {
@@ -227,6 +228,9 @@
             display: flex;
             flex-direction: column;
             gap: 20px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;        
         }
 
         .modal {
@@ -378,6 +382,76 @@
             background-color: #00cc4b85;
         }
 
+        .topicResponse {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+            margin-top: 20px;
+            background-color: white;
+            border-radius: 10px;
+        }
+
+        .topicResponse button {
+            width: 120px;
+            padding: 10px;
+            border-radius: 10px;
+            background-color: rgb(41, 86, 168);
+            border: none;
+            color: white;
+            cursor: pointer;
+            margin: 15px;
+        }
+
+        .topicResponse button:hover {
+            background-color: rgb(87, 123, 188);
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .topic-replies {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+            margin-top: 20px;
+            background-color: white;
+            border-radius: 10px;
+        }
+
+        .reply {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+            width: 100%;
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .message {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 50%;
+            overflow-wrap: anywhere;
+        }
+
+        .solution {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 50%;
+            overflow-wrap: anywhere;
+        }
+
+        .response-details {
+            display: flex;
+            flex-direction: column;
+            gap :20px;
+            width: 40%;
+        }
+
     </style>
 </head>
 
@@ -461,12 +535,17 @@
             <div class="topicDetails">
 
             </div>
+                
+            <div class="topicResponse">
+                <button>Responder</button>
+                <div class="response" style="display: none;">
+                    <textarea name="message" id="message" cols="30" rows="10" required placeholder="Escribe tu respuesta"></textarea>
+                    <textarea name="solution" id="solution" cols="30" rows="10" required placeholder="Escribe la solución"></textarea>
+                    <button id="btn-confirm-response">Enviar</button>
+                </div>
+            </div>
             <div class="topic-replies" style="display: block;">
-                <h4>Respuestas</h4>
-                <p>mensaje</p>
-                <p><span>solution</span></p>
-                <p>created at: </p>
-                <p>author: </p>
+
             </div>
             <button id="backToTopics">Volver a los topicos</button>
         </section>
