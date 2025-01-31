@@ -98,6 +98,7 @@ main {
     gap: 20px;
     width: 80%;
     margin: 40px;
+    box-sizing: border-box;
 }
 
 .topicList {
@@ -184,19 +185,46 @@ main {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    align-items: flex-start;
     cursor: pointer;
-    border-radius: 10px;
+    height: 200px;
+    margin: 0px;
+    box-sizing: border-box;
+    justify-content: space-evenly;
+    border-radius: 5px;
 }
 
+#topic-date p {
+    text-align: right;
+}
+#topic-header {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 80%;
+}
+
+#topic-header h3 {
+    color: #415a77;
+    font-weight: bolder;
+    text-overflow: ellipsis;
+}
+
+#topic-header span {
+    color: #fca311;
+    font-style: italic;
+}
+
+#topic-body {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    width: 100%;
+    justify-content: space-between;
+}
 .topic:hover {
-    padding: 20px;
     display: flex;
     flex-direction: column;
     gap: 10px;
-    align-items: center;
-    align-items: flex-start;
-    box-shadow: none 0 0 4px rgba(0, 0, 0, 0.2);
     background-color: whitesmoke;
 }
 
@@ -255,7 +283,7 @@ main {
     gap: 50px;
     background-color: white;
     padding: 30px;
-    border-radius: 10px; 
+    border-radius: 0px; 
     width: 80%;
     margin: auto;
 
@@ -451,6 +479,13 @@ div button.toggle-btn.active {
     width: 80%;
 }
 
+.topic-replies h3 {
+    padding: 20px;
+    text-align: left;
+    color: rgba(0 0 0 / 0.5);
+    font-size: 18px;
+}
+
 .reply {
     display: flex;
     flex-direction: row;
@@ -504,7 +539,7 @@ div button.toggle-btn.active {
 }
 
 .response button {
-    width: 10%;
+    width: 15%;
     padding: 10px;
     border-radius: 5px;
     background-color: rgb(41, 86, 168);

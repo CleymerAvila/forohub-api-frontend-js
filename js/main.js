@@ -60,22 +60,34 @@ function showTopicList(data, status=''){
         // Crear el HTML para los topics
         const topicsHTML = data.content.map(topic => `
             <div class="topic" data-id="${topic.topicId}">
-                <h3>${topic.title}</h3>
-                <p>Estado: <span>${topic.status}</span></p>
-                <p>Autor: ${topic.authorName}</p>
-                <p>Curso: ${topic.courseName}</p>
-                <p>Publicado ${new Date(topic.createdAt).toLocaleString()}</p>
+                <div id="topic-date">
+                    <p>${new Date(topic.createdAt).toLocaleDateString()}</p>      
+                </div>
+                <div id="topic-header">
+                    <h3>${topic.title}</h3>
+                    <p><span>${topic.courseName}</span></p>
+                </div>
+                <div id="topic-body">
+                    <p>por: ${topic.authorName}</p> 
+                    <p>Estado: <span>${topic.status}</span></p>
+                </div>
             </div>
         `).join('');
         topicList.innerHTML = topicsHTML;
     } else {
         const topicsHTML = data.content.filter(topic => topic.status === status).map(topic => `
             <div class="topic" data-id="${topic.topicId}">
-                <h3>${topic.title}</h3>
-                <p>Estado: <span>${topic.status}</span></p>
-                <p>Autor: ${topic.authorName}</p>
-                <p>Curso: ${topic.courseName}</p>
-                <p>Publicado ${new Date(topic.createdAt).toLocaleString()}</p>
+                <div id="topic-date">
+                    <p>${new Date(topic.createdAt).toLocaleDateString()}</p>      
+                </div>
+                <div id="topic-header">
+                    <h3>${topic.title}</h3>
+                    <p><span>${topic.courseName}</span></p>
+                </div>
+                <div id="topic-body">
+                    <p>por: ${topic.authorName}</p> 
+                    <p>Estado: <span>${topic.status}</span></p>
+                </div>
             </div>
         `).join('');
         topicList.innerHTML = topicsHTML;
@@ -120,10 +132,44 @@ async function showTopicDetail(topicId) {
             </div>
         `;
 
+        document.getElementById('btn-confirm-response').addEventListener('click', async function (){
+            const decodedToken = jwt_decode(token);
+            const topicId = document.getElementById('topicDetail').getAttribute('data-id');
+            const message = document.getElementById('message-response').value;
+            const solution = document.getElementById('solution-response').value;
+            const authorId = decodedToken.id;
+        
+            const newReply = {
+                message: message,
+                topicId: data.topicId,
+                authorId: authorId,
+                solution: solution
+            };
+        
+            console.log('Nueva respuesta: ', newReply);
+
+            try {
+                const data = await fetchData('http://localhost:8080/replies', 'POST', newReply, true);
+                if (data.replyId != null) {
+                    console.log('Respuesta creada correctamente');
+                    document.getElementById('message-response').value = '';
+                    document.getElementById('solution-response').value = '';
+                    alert('Respuesta creada correctamente');
+                    showTopicDetail(data.topicId);
+                    document.querySelector('.response').style.display = 'none';
+                } else {
+                    alert('Error al crear la respuesta');
+                }
+            } catch (error) {
+                alert('Error al intentar crear la respuesta');
+                console.error(error);
+            }
+        });
         // Mostrar respuestas
         const replies = data.replies;
         console.log('Respuestas: '+ replies);
         const repliesHTML = replies.map(reply => `
+            <h3>Respuestas</h3>
             <div class="reply">
                 <div>
                     <div class="message">
@@ -144,6 +190,8 @@ async function showTopicDetail(topicId) {
         topicReply.innerHTML = repliesHTML;
     }
 }
+
+
 
 document.getElementById('btn-confirm').addEventListener('click', async function () {
 
