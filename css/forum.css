@@ -142,6 +142,12 @@ main {
     box-shadow: inset 0 0 1px #0077B6;
 }
 
+.topic-options > p {
+    color: rgb(0 0 0 / 0.5);
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
 .topic-options select:focus {
     outline: none;
 }
@@ -156,13 +162,20 @@ main {
     font-weight: 600;
 }
 
-.topic-options button:hover {
-    background-color: #0096C7;
+#btn-create-topic {
+    background-color: #023E8A;
     cursor: pointer;
-    transition: bakcground-color 0.3s ease, transform 0.3s ease;
-    box-shadow:  inset  0 0 2px #000;
+    transition: all 0.3s ease;
     border: none;
-    transform: scale(1.0093);
+    color: white;
+} 
+
+#btn-create-topic:hover {
+    background-color: #5b8fd4;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    color: white;
 }
 
 .topic {
@@ -376,25 +389,25 @@ footer {
     flex-direction: row;
     flex-wrap: wrap;
     gap: 15px;
-    margin-top: 20px;
     width: 90%;
 }
 
 div button.toggle-btn {
-    border-radius: 10px;
+    border-radius: 0;
     padding: 12px 24px;
     background-color: rgb(212, 203, 203);
     color: #4d4d4d;
     font-weight: bold;
     cursor: pointer;
-    width: 50%;
+    width: 47%;
+    border: none;
 }
 
+
 div button.toggle-btn.active {
-    transform: all 0.3s ease;
-    border-style: outset solid #00cc4b;
+    transition: all 0.3s ease;
     color: white;
-    background-color: #00cc4b85;
+    background-color: #48CAE4;
 }
 
 .topicResponse {
