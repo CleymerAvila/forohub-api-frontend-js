@@ -123,18 +123,21 @@ async function showTopicDetail(topicId) {
                 }
             </div>
             <div class="topicText">
-                <h2>${data.title}</h2>
-                <p>Mensaje: ${data.message}</p>
-                <p>Estado: <span style=color:green>${data.status}</span></p>
-                <p>Autor: ${data.author}</p>
-                <p>Curso: ${data.course}</p>
-                <p>Publicado ${new Date(data.createdAt).toLocaleString()}</p>
+                <div class="topic-details-header">
+                    <h2>${data.title}</h2>
+                    <p>Publicado el ${new Date(data.createdAt).toLocaleDateString()}</p>
+                </div>
+                <p><span id="course-name">Referente al Curso ${data.course}</span></p> 
+                <p>${data.message}</p>
+                <div id="topic-details-other-info">
+                    <p>Por <span id="author-name">${data.author}</span></p> 
+                    <p>Estado: <span style=color:green>${data.status}</span></p>
+                </div>
             </div>
         `;
 
         document.getElementById('btn-confirm-response').addEventListener('click', async function (){
             const decodedToken = jwt_decode(token);
-            const topicId = document.getElementById('topicDetail').getAttribute('data-id');
             const message = document.getElementById('message-response').value;
             const solution = document.getElementById('solution-response').value;
             const authorId = decodedToken.id;
@@ -168,21 +171,23 @@ async function showTopicDetail(topicId) {
         // Mostrar respuestas
         const replies = data.replies;
         console.log('Respuestas: '+ replies);
+        if(replies.length === 0){
+            document.getElementById('topic-label').innerHTML = 'No hay respuestas';
+        } else {
+            document.getElementById('topic-label').innerHTML = 'Respuestas';        
+        }
         const repliesHTML = replies.map(reply => `
-            <h3>Respuestas</h3>
             <div class="reply">
-                <div>
-                    <div class="message">
+                <div class="reply-header">
+                    <p>Por <span>${reply.authorName}</span></p>
+                    <p>Publicado el ${new Date(reply.createdAt).toLocaleString()}</p>
+                </div>
+                <div class="reply-body">
+                    <div id="reply-message">
                         <p>Mensaje: ${reply.message}</p>
                     </div>
-                    <div class="solution">
+                    <div id="reply-solution">
                         <p><span style='color:blue'>Solución: </span>${reply.solution}</p>
-                    </div>
-                </div>
-                <div>
-                    <div class="response-details">
-                        <p>Creado el ${new Date(reply.createdAt).toLocaleString()}</p>
-                        <p>Autor: ${reply.authorId}</p>
                     </div>
                 </div>
             </div>

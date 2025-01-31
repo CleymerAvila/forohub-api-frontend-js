@@ -262,6 +262,8 @@ main {
 #topicDetail h2 {
     text-align: left;
     color: hsl(200, 94%, 64%);
+    font-size: 28px;
+    font-weight: bold;
 }
 
 .topicInfo  {
@@ -270,11 +272,50 @@ main {
     gap: 20px;
 }
 
+.topic-details-header {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.topic-details-header p {
+    color: rgba(0 0 0 / 0.5);
+    font-size: 16px;
+}
+
+#course-name {
+    color: #fca833;
+    font-weight: bold;
+    font-size: 18px;
+    font-style: italic;
+    text-decoration: overline;
+}
+
+#topic-details-other-info {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    width: 100%;
+    justify-content: space-between;
+}
+
+#author-name {
+    color: rgb(250 0 0 / 0.4); 
+    font-weight: bold;
+    text-decoration: underline;
+}
+
 .topicText {
     display: flex;
     flex-direction: column;
     gap: 20px;
     width: 80%;
+}
+
+.topicText  p {
+    color: rgba(0 0 0 / 0.5);
+    font-size: 20px;
+    text-wrap: balance;
 }
 
 #topicDetail .topicInfo {
@@ -479,20 +520,39 @@ div button.toggle-btn.active {
     width: 80%;
 }
 
-.topic-replies h3 {
+#topicDetail  h3 {
     padding: 20px;
     text-align: left;
     color: rgba(0 0 0 / 0.5);
     font-size: 18px;
+    font-weight: bold;
+    width: 80%;
+    margin: auto;
 }
 
 .reply {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     gap: 20px;
     width: 100%;
     background-color: white;
     padding: 20px;
+}
+
+.reply-header {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    width: 100%;
+    justify-content: space-between;
+}
+
+
+.reply-header span {
+    color: rgba(0 0 255  / 0.5);
+    font-size: 18px;
+    font-weight: bold;
+    text-decoration: underline;
 }
 
 .message {
