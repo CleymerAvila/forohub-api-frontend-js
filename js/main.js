@@ -2,7 +2,7 @@ import jwt_decode from 'https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-
 const token = getToken();
 const topicList = document.querySelector('.topicList');
 const topicContent = document.getElementById('topicDetail');
-const topicDetail = document.querySelector('.topicDetails');
+const topicDetail = document.querySelector('.topicInfo');
 const filterButtons = document.querySelectorAll('.toggle-btn');
 const topicReply = document.querySelector('.topic-replies');    
 
@@ -101,12 +101,23 @@ async function showTopicDetail(topicId) {
         topicContent.style.display = "block"; // Mostrar detalle
 
         topicDetail.innerHTML = `
-            <h2>${data.title}</h2>
-            <p>Mensaje: ${data.message}</p>
-            <p>Estado: <span style=color:green>${data.status}</span></p>
-            <p>Autor: ${data.author}</p>
-            <p>Curso: ${data.course}</p>
-            <p>Publicado ${new Date(data.createdAt).toLocaleString()}</p>
+            <div class="cant-topic">
+                ${data.replies.length === 1 
+                    ?
+                     `<h1>${data.replies.length}</h1>
+                      <p>Respuesta</p>` 
+                    : `<h1>${data.replies.length}</h1>
+                       <p>Respuestas</p>`
+                }
+            </div>
+            <div class="topicText">
+                <h2>${data.title}</h2>
+                <p>Mensaje: ${data.message}</p>
+                <p>Estado: <span style=color:green>${data.status}</span></p>
+                <p>Autor: ${data.author}</p>
+                <p>Curso: ${data.course}</p>
+                <p>Publicado ${new Date(data.createdAt).toLocaleString()}</p>
+            </div>
         `;
 
         // Mostrar respuestas
@@ -248,4 +259,10 @@ filterButtons.forEach(button => {
 
         // Aquí podrías hacer una llamada a la API o filtrar elementos
     });
+});
+
+
+// Función para mostrar el formulario de respuesta
+document.querySelector('.topicResponseBtn').addEventListener('click', function () {
+    document.querySelector('.response').style.display = 'block';
 });
