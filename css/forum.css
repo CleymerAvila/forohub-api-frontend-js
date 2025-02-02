@@ -191,6 +191,8 @@ main {
     box-sizing: border-box;
     justify-content: space-evenly;
     border-radius: 5px;
+    max-width: 100%;
+    text-overflow: ellipsis;
 }
 
 #topic-date p {
@@ -200,7 +202,9 @@ main {
     display: flex;
     flex-direction: column;
     gap: 5px;
-    width: 80%;
+    max-width: 100%;
+    width: 100%;
+    text-overflow: ellipsis;
 }
 
 #topic-header h3 {
@@ -228,6 +232,10 @@ main {
     background-color: whitesmoke;
 }
 
+#topic-author-name {
+    color: rgba(204, 36, 176, 0.888);
+}
+
 .topic h3 {
     color: cornflowerblue;
 }
@@ -251,7 +259,7 @@ main {
     display: flex;
     flex-direction: row;
     width: 100%;
-    gap: 20px;
+    gap: 10px;
     background-color: whitesmoke;
     border: solid 1px cornflowerblue;
     border-radius: 0px;
@@ -265,6 +273,38 @@ main {
     font-size: 28px;
     font-weight: bold;
 }
+
+#back-to-topics-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 10px;
+    font-size: 18px;
+    justify-items: center;
+    background-color: rgb(41, 86, 168);
+    color: white;
+    margin: auto;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 20px;
+    margin-left: 10%;
+}
+
+#back-to-topics-btn svg {
+    font-size: 32px;
+    font-weight: 900;
+}
+
+#back-to-topics-btn:hover {
+    background-color: rgb(87, 123, 188);
+    color: white;
+    transition: all 0.3s ease;
+}
+
 
 .topicInfo  {
     display: flex;
@@ -440,16 +480,26 @@ main {
 }
 
 footer {
-    /* margin-top: 70px; */
-    background-color: rgb(41, 86, 168);
+    display: flex;
+    background-color: #2956a8;
     color: white;
     padding: 20px;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 20px;
+    padding: 150px 0 150px 30px;
+}
+
+footer a {
+    color: #ffc6ff;
+    font-size: 18px;
+    text-decoration: none;
+    align-items: center;
+}
+
+footer svg:hover, a:hover {
+    color: #ff8c8c;
+    transition: all 0.3s ease;
+    transform: scale(0.97888);
 }
 
 /* Filtros de topicos */
@@ -553,6 +603,43 @@ div button.toggle-btn.active {
     font-size: 18px;
     font-weight: bold;
     text-decoration: underline;
+}
+
+.reply-body {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 85%;
+    background-color: rgb(252, 244, 252);
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.reply-body span {
+    color: rgba(0 0 0 / 0.5);
+    font-size: 18px;
+}
+
+#reply-message { 
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 80%;
+    overflow-wrap: anywhere;
+    height: auto;
+    font-size: 20px;
+}
+
+#reply-solution {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 80%;
+    overflow-wrap: anywhere;
+    height: auto;
+    font-size: 20px;
+    border-top: solid 1px rgb(0  0 0 / 0.4);
+    padding-top: 10px;
 }
 
 .message {
