@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     // Mostrar detalle de un tópico
     
-    document.getElementById('backToTopics').addEventListener('click', function () {
+    document.getElementById('back-to-topics-btn').addEventListener('click', function () {
         topicList.parentElement.style.display = "flex"; // Mostrar lista
         topicDetail.innerHTML = '';
         topicContent.style.display = "none"; // Ocultar detalle
@@ -58,38 +58,11 @@ function showTopicList(data, status=''){
 
     if(status === ''){
         // Crear el HTML para los topics
-        const topicsHTML = data.content.map(topic => `
-            <div class="topic" data-id="${topic.topicId}">
-                <div id="topic-date">
-                    <p>${new Date(topic.createdAt).toLocaleDateString()}</p>      
-                </div>
-                <div id="topic-header">
-                    <h3>${topic.title}</h3>
-                    <p><span>${topic.courseName}</span></p>
-                </div>
-                <div id="topic-body">
-                    <p>por: ${topic.authorName}</p> 
-                    <p>Estado: <span>${topic.status}</span></p>
-                </div>
-            </div>
-        `).join('');
+        const topicsHTML = data.content.map(topic => renderTopicItem(topic)).join('');
         topicList.innerHTML = topicsHTML;
     } else {
-        const topicsHTML = data.content.filter(topic => topic.status === status).map(topic => `
-            <div class="topic" data-id="${topic.topicId}">
-                <div id="topic-date">
-                    <p>${new Date(topic.createdAt).toLocaleDateString()}</p>      
-                </div>
-                <div id="topic-header">
-                    <h3>${topic.title}</h3>
-                    <p><span>${topic.courseName}</span></p>
-                </div>
-                <div id="topic-body">
-                    <p>por: ${topic.authorName}</p> 
-                    <p>Estado: <span>${topic.status}</span></p>
-                </div>
-            </div>
-        `).join('');
+        const topicsHTML = data.content.filter(topic => topic.status === status)
+        .map(topic => renderTopicItem(topic)).join('');
         topicList.innerHTML = topicsHTML;
     }
 
@@ -101,6 +74,24 @@ function showTopicList(data, status=''){
             showTopicDetail(topicId);
         });
     });
+}
+
+function renderTopicItem(topic) {
+    return `
+        <div class="topic" data-id="${topic.topicId}">
+            <div id="topic-date">
+                <p>${new Date(topic.createdAt).toLocaleDateString()}</p>      
+            </div>
+            <div id="topic-header">
+                <h3>${topic.title}</h3>
+                <p><span>${topic.courseName}</span></p>
+            </div>
+            <div id="topic-body">
+                <p>Por <span id="topic-author-name">${topic.authorName}</span></p>  
+                <p>Estado: <span>${topic.status}</span></p>
+            </div>
+        </div>
+    `;
 }
 async function showTopicDetail(topicId) {
 
@@ -184,10 +175,11 @@ async function showTopicDetail(topicId) {
                 </div>
                 <div class="reply-body">
                     <div id="reply-message">
-                        <p>Mensaje: ${reply.message}</p>
+                        <p>${reply.message}</p>
                     </div>
+                    <p><span>Solución: </span></p>
                     <div id="reply-solution">
-                        <p><span style='color:blue'>Solución: </span>${reply.solution}</p>
+                        <p>${reply.solution}</p>
                     </div>
                 </div>
             </div>
